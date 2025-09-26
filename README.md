@@ -27,49 +27,49 @@ flowchart LR
     %% ===============================
     %% CLIENT (Frontend)
     %% ===============================
-    subgraph CLIENT["💻 Frontend (React)"]
+    subgraph CLIENT["Frontend (React)"]
         direction TB
-        UA[👤 User Admin]
-        UB[👥 User Staff]
-        UC[🌐 User Public]
+        UA[User Admin]
+        UB[User Staff]
+        UC[User Public]
 
-        A1[🔑 Login / Register (JWT)]
-        A2[🧾 Receipts CRUD]
-        A3[📊 Reports & Charts]
-        A4[🎨 Theme Switcher]
-        A5[👥 User Management (Admin)]
-        A6[⚙️ Custom Fields (Admin)]
-        A7[🗂 Settings / Backup & Restore (Admin)]
-        A8[🎫 Support Tickets (Public)]
-        A9[🎟 Staff Tickets]
-        A10[🙏 Pushpanjali Donation (Public)]
-        A11[💳 Razorpay Checkout]
-        A12[📱 QR Code Display]
+        A1[Login / Register (JWT)]
+        A2[Receipts CRUD]
+        A3[Reports & Charts]
+        A4[Theme Switcher]
+        A5[User Management (Admin)]
+        A6[Custom Fields (Admin)]
+        A7[Settings / Backup & Restore (Admin)]
+        A8[Support Tickets (Public)]
+        A9[Staff Tickets]
+        A10[Pushpanjali Donation (Public)]
+        A11[Razorpay Checkout]
+        A12[QR Code Display]
     end
 
     %% ===============================
     %% BACKEND (Node.js/Express)
     %% ===============================
-    subgraph BACKEND["🖥 Backend (Node.js + Express)"]
+    subgraph BACKEND["Backend (Node.js + Express)"]
         direction TB
-        B1[🔑 Auth Controller (JWT + Roles)]
-        B2[🧾 Receipts Controller]
-        B3[📊 Reports Controller]
-        B4[🎨 Theme Controller]
-        B5[👥 User Controller]
-        B6[⚙️ Custom Fields Controller]
-        B7[🗂 Settings Controller]
-        B8[🎫 Tickets Controller]
-        B9[💳 Payment Controller (Razorpay SDK)]
-        B10[📱 QR Code Generator]
-        B11[🗄 Backup & Restore Handler]
-        B12[🔐 Role-based Middleware]
+        B1[Auth Controller (JWT + Roles)]
+        B2[Receipts Controller]
+        B3[Reports Controller]
+        B4[Theme Controller]
+        B5[User Controller]
+        B6[Custom Fields Controller]
+        B7[Settings Controller]
+        B8[Tickets Controller]
+        B9[Payment Controller (Razorpay SDK)]
+        B10[QR Code Generator]
+        B11[Backup & Restore Handler]
+        B12[Role-based Middleware]
     end
 
     %% ===============================
     %% DATABASE
     %% ===============================
-    subgraph DB["🗃 MySQL Database"]
+    subgraph DB["MySQL Database"]
         direction TB
         D1[(users)]
         D2[(receipts)]
@@ -83,7 +83,7 @@ flowchart LR
     %% ===============================
     %% PAYMENT
     %% ===============================
-    subgraph PAYMENT["💳 Razorpay Gateway"]
+    subgraph PAYMENT["Razorpay Gateway"]
         P1[Razorpay API]
     end
 
