@@ -27,117 +27,117 @@ graph TD
     %% Define Subgraphs for clear separation of layers
     subgraph S_CLIENT["Client-Side Application (React Frontend)"]
         direction LR
-        U_ADMIN[Admin User]
-        U_STAFF[Staff User]
-        U_PUBLIC[Public User]
+        U_ADMIN[Admin User];
+        U_STAFF[Staff User];
+        U_PUBLIC[Public User];
 
-        %% Changed node shapes to standard brackets for compatibility
-        A_AUTH[Login / Register (JWT)]
-        A_CRUD[Receipts: CRUD]
-        A_REPORTS[Reporting & Analytics]
-        A_THEME[Theme Switcher]
-        A_USER_MGMT[User Management (Admin)]
-        A_CUSTOM_FIELDS[Custom Fields Config]
-        A_SYS_CONFIG[System Settings & Backup/Restore]
-        A_TICKET_PUBLIC[Support Ticket Submission]
-        A_TICKET_STAFF[Staff Ticket Management]
-        A_PAYMENT_FORM[Donation / Payment Form]
-        A_CHECKOUT[Razorpay Checkout]
-        A_QR_DISPLAY[Display QR Code]
+        %% Nodes defined with semicolons for strict parsing compatibility
+        A_AUTH[Login / Register (JWT)];
+        A_CRUD[Receipts: CRUD];
+        A_REPORTS[Reporting & Analytics];
+        A_THEME[Theme Switcher];
+        A_USER_MGMT[User Management (Admin)];
+        A_CUSTOM_FIELDS[Custom Fields Config];
+        A_SYS_CONFIG[System Settings & Backup/Restore];
+        A_TICKET_PUBLIC[Support Ticket Submission];
+        A_TICKET_STAFF[Staff Ticket Management];
+        A_PAYMENT_FORM[Donation / Payment Form];
+        A_CHECKOUT[Razorpay Checkout];
+        A_QR_DISPLAY[Display QR Code];
 
         %% User interaction flows
-        U_ADMIN --> A_AUTH
-        U_STAFF --> A_AUTH
-        U_PUBLIC --> A_AUTH
+        U_ADMIN --> A_AUTH;
+        U_STAFF --> A_AUTH;
+        U_PUBLIC --> A_AUTH;
 
-        U_ADMIN --> A_CRUD
-        U_STAFF --> A_CRUD
-        U_ADMIN --> A_REPORTS
-        U_STAFF --> A_REPORTS
-        U_ADMIN --> A_THEME
-        U_ADMIN --> A_USER_MGMT
-        U_ADMIN --> A_CUSTOM_FIELDS
-        U_ADMIN --> A_SYS_CONFIG
-        U_PUBLIC --> A_TICKET_PUBLIC
-        U_STAFF --> A_TICKET_STAFF
-        U_PUBLIC --> A_PAYMENT_FORM
-        A_PAYMENT_FORM --> A_CHECKOUT
+        U_ADMIN --> A_CRUD;
+        U_STAFF --> A_CRUD;
+        U_ADMIN --> A_REPORTS;
+        U_STAFF --> A_REPORTS;
+        U_ADMIN --> A_THEME;
+        U_ADMIN --> A_USER_MGMT;
+        U_ADMIN --> A_CUSTOM_FIELDS;
+        U_ADMIN --> A_SYS_CONFIG;
+        U_PUBLIC --> A_TICKET_PUBLIC;
+        U_STAFF --> A_TICKET_STAFF;
+        U_PUBLIC --> A_PAYMENT_FORM;
+        A_PAYMENT_FORM --> A_CHECKOUT;
     end
 
     ---
 
     subgraph S_BACKEND["Server-Side API (Node.js/Express)"]
-        B_AUTH[Auth Controller: JWT Roles]
-        B_RECEIPTS[Receipts Controller]
-        B_REPORTS[Reports Controller]
-        B_THEME[Theme Controller]
-        B_USER_MGMT[User Controller]
-        B_CUSTOM_FIELDS[Custom Fields Controller]
-        B_SYS_CONFIG[Settings / Backup Handler]
-        B_TICKETS[Tickets Controller]
-        B_PAYMENT[Payment Controller: Razorpay SDK]
-        B_QR_GEN[QR Code Generator]
-        B_MIDDLEWARE[Role-based Authorization Middleware]
+        B_AUTH[Auth Controller: JWT Roles];
+        B_RECEIPTS[Receipts Controller];
+        B_REPORTS[Reports Controller];
+        B_THEME[Theme Controller];
+        B_USER_MGMT[User Controller];
+        B_CUSTOM_FIELDS[Custom Fields Controller];
+        B_SYS_CONFIG[Settings / Backup Handler];
+        B_TICKETS[Tickets Controller];
+        B_PAYMENT[Payment Controller: Razorpay SDK];
+        B_QR_GEN[QR Code Generator];
+        B_MIDDLEWARE[Role-based Authorization Middleware];
 
         %% Client to Backend (API) flows
-        A_AUTH --> B_AUTH
-        A_CRUD --> B_MIDDLEWARE
-        A_REPORTS --> B_MIDDLEWARE
-        A_THEME --> B_MIDDLEWARE
-        A_USER_MGMT --> B_MIDDLEWARE
-        A_CUSTOM_FIELDS --> B_MIDDLEWARE
-        A_SYS_CONFIG --> B_MIDDLEWARE
-        A_TICKET_PUBLIC --> B_MIDDLEWARE
-        A_TICKET_STAFF --> B_MIDDLEWARE
-        A_PAYMENT_FORM --> B_MIDDLEWARE
+        A_AUTH --> B_AUTH;
+        A_CRUD --> B_MIDDLEWARE;
+        A_REPORTS --> B_MIDDLEWARE;
+        A_THEME --> B_MIDDLEWARE;
+        A_USER_MGMT --> B_MIDDLEWARE;
+        A_CUSTOM_FIELDS --> B_MIDDLEWARE;
+        A_SYS_CONFIG --> B_MIDDLEWARE;
+        A_TICKET_PUBLIC --> B_MIDDLEWARE;
+        A_TICKET_STAFF --> B_MIDDLEWARE;
+        A_PAYMENT_FORM --> B_MIDDLEWARE;
 
-        B_MIDDLEWARE --> B_RECEIPTS
-        B_MIDDLEWARE --> B_REPORTS
-        B_MIDDLEWARE --> B_THEME
-        B_MIDDLEWARE --> B_USER_MGMT
-        B_MIDDLEWARE --> B_CUSTOM_FIELDS
-        B_MIDDLEWARE --> B_SYS_CONFIG
-        B_MIDDLEWARE --> B_TICKETS
-        B_MIDDLEWARE --> B_PAYMENT
+        B_MIDDLEWARE --> B_RECEIPTS;
+        B_MIDDLEWARE --> B_REPORTS;
+        B_MIDDLEWARE --> B_THEME;
+        B_MIDDLEWARE --> B_USER_MGMT;
+        B_MIDDLEWARE --> B_CUSTOM_FIELDS;
+        B_MIDDLEWARE --> B_SYS_CONFIG;
+        B_MIDDLEWARE --> B_TICKETS;
+        B_MIDDLEWARE --> B_PAYMENT;
     end
 
     ---
 
     subgraph S_DB["Data Layer (MySQL Database)"]
-        %% Database nodes use the cylinder shape for visual representation
-        D_USERS[(users)]
-        D_RECEIPTS[(receipts)]
-        D_THEMES[(themes / config)]
-        D_CUSTOM_FIELDS[(custom_fields definition)]
-        D_TICKETS[(support_tickets)]
-        D_CONFIG[(system_config / payments)]
-        D_BACKUP[(backup_files_storage)]
+        %% Database nodes use the cylinder shape
+        D_USERS[(users)];
+        D_RECEIPTS[(receipts)];
+        D_THEMES[(themes / config)];
+        D_CUSTOM_FIELDS[(custom_fields definition)];
+        D_TICKETS[(support_tickets)];
+        D_CONFIG[(system_config / payments)];
+        D_BACKUP[(backup_files_storage)];
     end
 
     ---
 
     subgraph S_EXTERNAL["External Service"]
-        P_RAZORPAY[Razorpay API Gateway]
+        P_RAZORPAY[Razorpay API Gateway];
     end
 
     %% Backend to Data Layer flows
-    B_AUTH --> D_USERS
-    B_USER_MGMT --> D_USERS
-    B_RECEIPTS --> D_RECEIPTS
-    B_RECEIPTS --> B_QR_GEN
-    B_QR_GEN --> A_QR_DISPLAY
-    B_REPORTS --> D_RECEIPTS
-    B_THEME --> D_THEMES
-    B_CUSTOM_FIELDS --> D_CUSTOM_FIELDS
-    B_TICKETS --> D_TICKETS
-    B_PAYMENT --> D_RECEIPTS
-    B_PAYMENT --> D_CONFIG
+    B_AUTH --> D_USERS;
+    B_USER_MGMT --> D_USERS;
+    B_RECEIPTS --> D_RECEIPTS;
+    B_RECEIPTS --> B_QR_GEN;
+    B_QR_GEN --> A_QR_DISPLAY;
+    B_REPORTS --> D_RECEIPTS;
+    B_THEME --> D_THEMES;
+    B_CUSTOM_FIELDS --> D_CUSTOM_FIELDS;
+    B_TICKETS --> D_TICKETS;
+    B_PAYMENT --> D_RECEIPTS;
+    B_PAYMENT --> D_CONFIG;
 
-    B_SYS_CONFIG -- Backup / Restore --> D_BACKUP
+    B_SYS_CONFIG -- Backup / Restore --> D_BACKUP;
 
     %% Payment Integration flow
-    A_CHECKOUT --> P_RAZORPAY
-    P_RAZORPAY -- Webhook / Success --> B_PAYMENT
+    A_CHECKOUT --> P_RAZORPAY;
+    P_RAZORPAY -- Webhook / Success --> B_PAYMENT;
 ```
 
 ---
