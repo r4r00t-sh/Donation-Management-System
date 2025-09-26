@@ -23,107 +23,117 @@ A full-featured, production-ready donation and receipt management system for San
 ## Architecture
 
 ```mermaid
-flowchart TB
-    subgraph CLIENT["Frontend React"]
-        direction TB
-        UA[User Admin]
-        UB[User Staff]
-        UC[User Public]
-        A1[Login Register JWT]
-        A2[Receipts CRUD]
-        A3[Reports Charts]
-        A4[Theme Switcher]
-        A5[User Management Admin]
-        A6[Custom Fields Admin]
-        A7[Settings Backup Restore Admin]
-        A8[Support Tickets Public]
-        A9[Staff Tickets Staff]
-        A10[Pushpanjali Donation Public]
-        A11[Razorpay Checkout]
-        A12[QR Code Display]
+graph TD
+    %% Define Subgraphs for clear separation of layers
+    subgraph S_CLIENT["Client-Side Application (React Frontend)"]
+        direction LR
+        U_ADMIN[fa:fa-user-cog Administrator User]
+        U_STAFF[fa:fa-user-tie Staff User]
+        U_PUBLIC[fa:fa-users Public User (Anonymous)]
+
+        A_AUTH{fa:fa-lock Login / Registration (JWT)}
+        A_CRUD[fa:fa-file-invoice Receipts: CRUD Operations]
+        A_REPORTS[fa:fa-chart-bar Reporting & Analytics]
+        A_THEME[fa:fa-palette Theme & UI Switcher]
+        A_USER_MGMT[fa:fa-user-friends User Management (Admin)]
+        A_CUSTOM_FIELDS[fa:fa-list-alt Custom Fields Config (Admin)]
+        A_SYS_CONFIG[fa:fa-cogs System Settings & Backup/Restore]
+        A_TICKET_PUBLIC[fa:fa-headset Support Ticket Submission]
+        A_TICKET_STAFF[fa:fa-ticket-alt Staff Ticket Management]
+        A_PAYMENT_FORM[fa:fa-gift Donation / Payment Form]
+        A_CHECKOUT[fa:fa-credit-card Razorpay Checkout (IFrame)]
+        A_QR_DISPLAY[fa:fa-qrcode Display Generated QR Code]
+
+        %% User interaction flows
+        U_ADMIN --> A_AUTH
+        U_STAFF --> A_AUTH
+        U_PUBLIC --> A_AUTH
+
+        U_ADMIN --> A_CRUD
+        U_STAFF --> A_CRUD
+
+        U_ADMIN --> A_REPORTS
+        U_STAFF --> A_REPORTS
+
+        U_ADMIN --> A_THEME
+        U_ADMIN --> A_USER_MGMT
+        U_ADMIN --> A_CUSTOM_FIELDS
+        U_ADMIN --> A_SYS_CONFIG
+
+        U_PUBLIC --> A_TICKET_PUBLIC
+        U_STAFF --> A_TICKET_STAFF
+
+        U_PUBLIC --> A_PAYMENT_FORM
+        A_PAYMENT_FORM --> A_CHECKOUT
     end
-    subgraph BACKEND["Backend Node.js Express"]
-        direction TB
-        B1[Auth Controller JWT Roles]
-        B2[Receipts Controller]
-        B3[Reports Controller]
-        B4[Theme Controller]
-        B5[User Controller]
-        B6[Custom Fields Controller]
-        B7[Settings Controller]
-        B8[Tickets Controller]
-        B9[Payment Controller Razorpay SDK]
-        B10[QR Code Generator]
-        B11[Backup Restore Handler]
-        B12[Role-based Middleware]
+
+    subgraph S_BACKEND["Server-Side API (Node.js/Express)"]
+        B_AUTH[fa:fa-key Auth Controller: JWT, Roles]
+        B_RECEIPTS[fa:fa-database Receipts Controller]
+        B_REPORTS[fa:fa-chart-line Reports Controller]
+        B_THEME[fa:fa-paint-brush Theme Controller]
+        B_USER_MGMT[fa:fa-user-shield User Controller]
+        B_CUSTOM_FIELDS[fa:fa-sliders-h Custom Fields Config Controller]
+        B_SYS_CONFIG[fa:fa-server Settings / Backup Handler]
+        B_TICKETS[fa:fa-inbox Tickets Controller]
+        B_PAYMENT[fa:fa-dollar-sign Payment Controller: Razorpay SDK]
+        B_QR_GEN[fa:fa-qrcode QR Code Generator]
+        B_MIDDLEWARE[fa:fa-shield-alt Role-based Authorization Middleware]
+
+        %% Client to Backend (API) flows
+        A_AUTH --> B_AUTH
+        A_CRUD --> B_MIDDLEWARE
+        A_REPORTS --> B_MIDDLEWARE
+        A_THEME --> B_MIDDLEWARE
+        A_USER_MGMT --> B_MIDDLEWARE
+        A_CUSTOM_FIELDS --> B_MIDDLEWARE
+        A_SYS_CONFIG --> B_MIDDLEWARE
+        A_TICKET_PUBLIC --> B_MIDDLEWARE
+        A_TICKET_STAFF --> B_MIDDLEWARE
+        A_PAYMENT_FORM --> B_MIDDLEWARE
+
+        B_MIDDLEWARE --> B_RECEIPTS
+        B_MIDDLEWARE --> B_REPORTS
+        B_MIDDLEWARE --> B_THEME
+        B_MIDDLEWARE --> B_USER_MGMT
+        B_MIDDLEWARE --> B_CUSTOM_FIELDS
+        B_MIDDLEWARE --> B_SYS_CONFIG
+        B_MIDDLEWARE --> B_TICKETS
+        B_MIDDLEWARE --> B_PAYMENT
     end
-    subgraph DB["MySQL Database"]
-        direction TB
-        D1[(users)]
-        D2[(receipts)]
-        D3[(themes)]
-        D4[(custom_fields)]
-        D5[(tickets)]
-        D6[(payment_config)]
-        D7[(backup files)]
+
+    subgraph S_DB["Data Layer (MySQL Database)"]
+        D_USERS[(fa:fa-table Users / Roles)]
+        D_RECEIPTS[(fa:fa-table Receipts)]
+        D_THEMES[(fa:fa-table Themes / Config)]
+        D_CUSTOM_FIELDS[(fa:fa-table Custom Fields Definition)]
+        D_TICKETS[(fa:fa-table Support Tickets)]
+        D_CONFIG[(fa:fa-table System Config / Payments)]
+        D_BACKUP[(fa:fa-hdd Backup Files Storage)]
     end
-    subgraph PAYMENT["Razorpay"]
-        direction TB
-        P1[Razorpay API]
+
+    subgraph S_EXTERNAL["External Service"]
+        P_RAZORPAY[fa:fa-money-check-alt Razorpay API Gateway]
     end
-    
-    UA --> A1
-    UB --> A1
-    UC --> A1
-    A1 --> B1
-    B1 --> D1
-    UA --> A2
-    UB --> A2
-    A2 --> B2
-    B2 --> D2
-    B2 --> B10
-    B10 --> A12
-    UA --> A3
-    UB --> A3
-    A3 --> B3
-    B3 --> D2
-    UA --> A4
-    A4 --> B4
-    B4 --> D3
-    UA --> A5
-    A5 --> B5
-    B5 --> D1
-    UA --> A6
-    A6 --> B6
-    B6 --> D4
-    UA --> A7
-    A7 --> B11
-    B11 --> D7
-    UC --> A8
-    A8 --> B8
-    B8 --> D5
-    UB --> A9
-    A9 --> B8
-    UC --> A10
-    A10 --> A11
-    A11 --> P1
-    A10 --> B9
-    B9 --> P1
-    B9 --> D2
-    A4 --> B4
-    A3 --> B3
-    A2 --> B12
-    A3 --> B12
-    A4 --> B12
-    A5 --> B12
-    A6 --> B12
-    A7 --> B12
-    A8 --> B12
-    A9 --> B12
-    A10 --> B12
-    UA --> A7
-    A7 --> B11
-    B11 --> D7
+
+    %% Backend to Data Layer flows
+    B_AUTH --> D_USERS
+    B_USER_MGMT --> D_USERS
+    B_RECEIPTS --> D_RECEIPTS
+    B_RECEIPTS --> B_QR_GEN
+    B_QR_GEN --> A_QR_DISPLAY
+    B_REPORTS --> D_RECEIPTS
+    B_THEME --> D_THEMES
+    B_CUSTOM_FIELDS --> D_CUSTOM_FIELDS
+    B_TICKETS --> D_TICKETS
+    B_PAYMENT --> D_RECEIPTS
+    B_PAYMENT --> D_CONFIG
+
+    B_SYS_CONFIG -- Backup / Restore --> D_BACKUP
+
+    %% Payment Integration flow
+    A_CHECKOUT --> P_RAZORPAY
+    P_RAZORPAY -- Webhook / Success --> B_PAYMENT
 ```
 
 ---
