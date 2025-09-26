@@ -104,6 +104,9 @@ Thumbs.db
 *.sqlite
 *.sqlite3
 
+# User data files (sensitive)
+users.sql
+
 # Backup files
 *.bak
 *.backup
