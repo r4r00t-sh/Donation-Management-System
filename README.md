@@ -23,107 +23,49 @@ A full-featured, production-ready donation and receipt management system for San
 ## Architecture
 
 ```mermaid
-flowchart TB
-    subgraph CLIENT["Frontend React"]
+flowchart LR
+    %% High-level Application Flow
+
+    %% ==== CLIENT ====
+    subgraph CLIENT["Frontend (React)"]
         direction TB
-        UA[User Admin]
-        UB[User Staff]
-        UC[User Public]
-        A1[Login Register JWT]
-        A2[Receipts CRUD]
-        A3[Reports Charts]
-        A4[Theme Switcher]
-        A5[User Management Admin]
-        A6[Custom Fields Admin]
-        A7[Settings Backup Restore Admin]
-        A8[Support Tickets Public]
-        A9[Staff Tickets Staff]
-        A10[Pushpanjali Donation Public]
-        A11[Razorpay Checkout]
-        A12[QR Code Display]
+        C1[User Admin / Staff / Public]
+        C2[Login & Register]
+        C3[Receipts, Reports, Donations, Tickets, Settings]
     end
-    subgraph BACKEND["Backend Node.js Express"]
+
+    %% ==== BACKEND ====
+    subgraph BACKEND["Backend (Node.js + Express)"]
         direction TB
-        B1[Auth Controller JWT Roles]
-        B2[Receipts Controller]
-        B3[Reports Controller]
-        B4[Theme Controller]
-        B5[User Controller]
-        B6[Custom Fields Controller]
-        B7[Settings Controller]
-        B8[Tickets Controller]
-        B9[Payment Controller Razorpay SDK]
-        B10[QR Code Generator]
-        B11[Backup Restore Handler]
-        B12[Role-based Middleware]
+        B1[Auth & Role Middleware]
+        B2[Controllers: Receipts / Reports / Users / Settings / Tickets / Payment / QR]
     end
-    subgraph DB["MySQL Database"]
+
+    %% ==== DATA ====
+    subgraph DATA["MySQL Database"]
         direction TB
-        D1[(users)]
-        D2[(receipts)]
-        D3[(themes)]
-        D4[(custom_fields)]
-        D5[(tickets)]
-        D6[(payment_config)]
-        D7[(backup files)]
+        D1[(Users)]
+        D2[(Receipts)]
+        D3[(Tickets)]
+        D4[(Themes & Custom Fields)]
+        D5[(Payment Config & Backups)]
     end
-    subgraph PAYMENT["Razorpay"]
-        direction TB
+
+    %% ==== PAYMENT ====
+    subgraph PAYMENT["Razorpay Gateway"]
         P1[Razorpay API]
     end
-    
-    UA --> A1
-    UB --> A1
-    UC --> A1
-    A1 --> B1
-    B1 --> D1
-    UA --> A2
-    UB --> A2
-    A2 --> B2
+
+    %% ==== FLOW CONNECTIONS ====
+    C1 --> C2 --> B1 --> D1
+    C1 --> C3 --> B2
     B2 --> D2
-    B2 --> B10
-    B10 --> A12
-    UA --> A3
-    UB --> A3
-    A3 --> B3
-    B3 --> D2
-    UA --> A4
-    A4 --> B4
-    B4 --> D3
-    UA --> A5
-    A5 --> B5
-    B5 --> D1
-    UA --> A6
-    A6 --> B6
-    B6 --> D4
-    UA --> A7
-    A7 --> B11
-    B11 --> D7
-    UC --> A8
-    A8 --> B8
-    B8 --> D5
-    UB --> A9
-    A9 --> B8
-    UC --> A10
-    A10 --> A11
-    A11 --> P1
-    A10 --> B9
-    B9 --> P1
-    B9 --> D2
-    A4 --> B4
-    A3 --> B3
-    A2 --> B12
-    A3 --> B12
-    A4 --> B12
-    A5 --> B12
-    A6 --> B12
-    A7 --> B12
-    A8 --> B12
-    A9 --> B12
-    A10 --> B12
-    UA --> A7
-    A7 --> B11
-    B11 --> D7
+    B2 --> D3
+    B2 --> D4
+    B2 --> D5
+    B2 --> P1
+
+
 ```
 
 ---
