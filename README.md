@@ -24,25 +24,25 @@ A full-featured, production-ready donation and receipt management system for San
 
 ```mermaid
 flowchart TD
-    subgraph CLIENT["Frontend (React)"]
-        UA[User: Admin]
-        UB[User: Staff]
-        UC[User: Public]
-        A1[Login/Register (JWT)]
+    subgraph CLIENT["Frontend React"]
+        UA[User Admin]
+        UB[User Staff]
+        UC[User Public]
+        A1[Login Register JWT]
         A2[Receipts CRUD]
-        A3[Reports & Charts]
+        A3[Reports Charts]
         A4[Theme Switcher]
-        A5[User Management (Admin)]
-        A6[Custom Fields (Admin)]
-        A7[Settings & Backup/Restore (Admin)]
-        A8[Support Tickets (Public)]
-        A9[Staff Tickets (Staff)]
-        A10[Pushpanjali/Donation (Public)]
-        A11[Razorpay Checkout.js]
+        A5[User Management Admin]
+        A6[Custom Fields Admin]
+        A7[Settings Backup Restore Admin]
+        A8[Support Tickets Public]
+        A9[Staff Tickets Staff]
+        A10[Pushpanjali Donation Public]
+        A11[Razorpay Checkout]
         A12[QR Code Display]
     end
-    subgraph BACKEND["Backend (Node.js/Express)"]
-        B1[Auth Controller (JWT, Roles)]
+    subgraph BACKEND["Backend Node.js Express"]
+        B1[Auth Controller JWT Roles]
         B2[Receipts Controller]
         B3[Reports Controller]
         B4[Theme Controller]
@@ -50,9 +50,9 @@ flowchart TD
         B6[Custom Fields Controller]
         B7[Settings Controller]
         B8[Tickets Controller]
-        B9[Payment Controller (Razorpay SDK)]
+        B9[Payment Controller Razorpay SDK]
         B10[QR Code Generator]
-        B11[Backup/Restore Handler]
+        B11[Backup Restore Handler]
         B12[Role-based Middleware]
     end
     subgraph DB["MySQL Database"]
@@ -67,65 +67,59 @@ flowchart TD
     subgraph PAYMENT["Razorpay"]
         P1[Razorpay API]
     end
-    UA -- "Login/Register" --> A1
-    UB -- "Login/Register" --> A1
-    UC -- "Login/Register" --> A1
-    A1 -- "POST /api/auth/*" --> B1
-    B1 -- "users, JWT" --> D1
-    UA -- "Receipts CRUD" --> A2
-    UB -- "Receipts CRUD" --> A2
-    A2 -- "GET/POST/PUT/DELETE /api/receipts" --> B2
-    B2 -- "CRUD" --> D2
-    B2 -- "QR Code" --> B10
-    B10 -- "QR Data" --> A12
-    UA -- "Reports" --> A3
-    UB -- "Reports" --> A3
-    A3 -- "GET /api/reports" --> B3
-    B3 -- "Aggregate" --> D2
-    UA -- "Theme Switch" --> A4
-    A4 -- "GET/POST /api/theme*" --> B4
-    B4 -- "themes" --> D3
-    UA -- "User Management" --> A5
-    A5 -- "GET/POST/PUT/DELETE /api/users" --> B5
-    B5 -- "users" --> D1
-    UA -- "Custom Fields" --> A6
-    A6 -- "GET/POST/DELETE /api/custom-fields" --> B6
-    B6 -- "custom_fields" --> D4
-    UA -- "Settings/Backup" --> A7
-    A7 -- "GET/POST /api/backup/*" --> B11
-    B11 -- "Export/Import" --> D7
-    UC -- "Support Tickets" --> A8
-    A8 -- "GET/POST /api/tickets" --> B8
-    B8 -- "tickets" --> D5
-    UB -- "Staff Tickets" --> A9
-    A9 -- "GET/POST /api/tickets" --> B8
-    B8 -- "tickets" --> D5
-    UC -- "Pushpanjali/Donation" --> A10
-    A10 -- "Razorpay Checkout.js" --> A11
-    A11 -- "Payment" --> P1
-    A10 -- "POST /api/payment/razorpay/order" --> B9
-    B9 -- "Razorpay SDK" --> P1
-    B9 -- "Verify/Receipt" --> D2
-    A4 -- "Theme Fetch" --> B4
-    A3 -- "Analytics" --> B3
-    A2 -- "JWT in Header" --> B12
-    A3 -- "JWT in Header" --> B12
-    A4 -- "JWT in Header" --> B12
-    A5 -- "JWT in Header" --> B12
-    A6 -- "JWT in Header" --> B12
-    A7 -- "JWT in Header" --> B12
-    A8 -- "JWT in Header" --> B12
-    A9 -- "JWT in Header" --> B12
-    A10 -- "JWT in Header" --> B12
-    UA -- "Backup/Restore" --> A7
-    A7 -- "API" --> B11
-    B11 -- "File I/O" --> D7
-    UA -.->|Admin| A5
-    UA -.->|Admin| A6
-    UA -.->|Admin| A7
-    UB -.->|Staff| A9
-    UC -.->|Public| A8
-    UC -.->|Public| A10
+    
+    UA --> A1
+    UB --> A1
+    UC --> A1
+    A1 --> B1
+    B1 --> D1
+    UA --> A2
+    UB --> A2
+    A2 --> B2
+    B2 --> D2
+    B2 --> B10
+    B10 --> A12
+    UA --> A3
+    UB --> A3
+    A3 --> B3
+    B3 --> D2
+    UA --> A4
+    A4 --> B4
+    B4 --> D3
+    UA --> A5
+    A5 --> B5
+    B5 --> D1
+    UA --> A6
+    A6 --> B6
+    B6 --> D4
+    UA --> A7
+    A7 --> B11
+    B11 --> D7
+    UC --> A8
+    A8 --> B8
+    B8 --> D5
+    UB --> A9
+    A9 --> B8
+    UC --> A10
+    A10 --> A11
+    A11 --> P1
+    A10 --> B9
+    B9 --> P1
+    B9 --> D2
+    A4 --> B4
+    A3 --> B3
+    A2 --> B12
+    A3 --> B12
+    A4 --> B12
+    A5 --> B12
+    A6 --> B12
+    A7 --> B12
+    A8 --> B12
+    A9 --> B12
+    A10 --> B12
+    UA --> A7
+    A7 --> B11
+    B11 --> D7
 ```
 
 ---
