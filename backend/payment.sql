@@ -1,0 +1,7 @@
+CREATE TABLE payment_config (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    gateway VARCHAR(32) NOT NULL,
+    key_id VARCHAR(128) NOT NULL,
+    key_secret VARCHAR(128) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT 1
+); 
