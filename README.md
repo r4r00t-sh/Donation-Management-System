@@ -1,4 +1,4 @@
-# Santhigiri Ashram Donation Management System
+# Donation Management System
 
 ## Overview
 A full-featured, production-ready donation and receipt management system for Santhigiri Ashram. Built with a React frontend and Node.js/Express/MySQL backend, supporting multi-user roles, global theming, custom fields, ticket/support system, Razorpay payment integration, and backup/restore.
