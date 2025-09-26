@@ -23,8 +23,9 @@ A full-featured, production-ready donation and receipt management system for San
 ## Architecture
 
 ```mermaid
-flowchart TD
+flowchart TB
     subgraph CLIENT["Frontend React"]
+        direction TB
         UA[User Admin]
         UB[User Staff]
         UC[User Public]
@@ -42,6 +43,7 @@ flowchart TD
         A12[QR Code Display]
     end
     subgraph BACKEND["Backend Node.js Express"]
+        direction TB
         B1[Auth Controller JWT Roles]
         B2[Receipts Controller]
         B3[Reports Controller]
@@ -56,6 +58,7 @@ flowchart TD
         B12[Role-based Middleware]
     end
     subgraph DB["MySQL Database"]
+        direction TB
         D1[(users)]
         D2[(receipts)]
         D3[(themes)]
@@ -65,6 +68,7 @@ flowchart TD
         D7[(backup files)]
     end
     subgraph PAYMENT["Razorpay"]
+        direction TB
         P1[Razorpay API]
     end
     

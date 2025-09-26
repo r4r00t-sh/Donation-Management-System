@@ -1,0 +1,8 @@
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignore all SQL files
+*.sql
+backend/*.sql
