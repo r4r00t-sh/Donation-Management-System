@@ -84,6 +84,7 @@ flowchart LR
     %% PAYMENT
     %% ===============================
     subgraph PAYMENT["Razorpay Gateway"]
+        direction TB
         P1[Razorpay API]
     end
 
@@ -129,7 +130,6 @@ flowchart LR
     A8 --> B12
     A9 --> B12
     A10 --> B12
-
 ```
 
 ---
