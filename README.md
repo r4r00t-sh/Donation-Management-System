@@ -23,121 +23,113 @@ A full-featured, production-ready donation and receipt management system for San
 ## Architecture
 
 ```mermaid
-graph TD
-    %% Define Subgraphs for clear separation of layers
-    subgraph S_CLIENT["Client-Side Application (React Frontend)"]
-        direction LR
-        U_ADMIN[Admin User];
-        U_STAFF[Staff User];
-        U_PUBLIC[Public User];
+flowchart LR
+    %% ===============================
+    %% CLIENT (Frontend)
+    %% ===============================
+    subgraph CLIENT["💻 Frontend (React)"]
+        direction TB
+        UA[👤 User Admin]
+        UB[👥 User Staff]
+        UC[🌐 User Public]
 
-        %% Nodes defined with semicolons for strict parsing compatibility
-        A_AUTH[Login / Register (JWT)];
-        A_CRUD[Receipts: CRUD];
-        A_REPORTS[Reporting & Analytics];
-        A_THEME[Theme Switcher];
-        A_USER_MGMT[User Management (Admin)];
-        A_CUSTOM_FIELDS[Custom Fields Config];
-        A_SYS_CONFIG[System Settings & Backup/Restore];
-        A_TICKET_PUBLIC[Support Ticket Submission];
-        A_TICKET_STAFF[Staff Ticket Management];
-        A_PAYMENT_FORM[Donation / Payment Form];
-        A_CHECKOUT[Razorpay Checkout];
-        A_QR_DISPLAY[Display QR Code];
-
-        %% User interaction flows
-        U_ADMIN --> A_AUTH;
-        U_STAFF --> A_AUTH;
-        U_PUBLIC --> A_AUTH;
-
-        U_ADMIN --> A_CRUD;
-        U_STAFF --> A_CRUD;
-        U_ADMIN --> A_REPORTS;
-        U_STAFF --> A_REPORTS;
-        U_ADMIN --> A_THEME;
-        U_ADMIN --> A_USER_MGMT;
-        U_ADMIN --> A_CUSTOM_FIELDS;
-        U_ADMIN --> A_SYS_CONFIG;
-        U_PUBLIC --> A_TICKET_PUBLIC;
-        U_STAFF --> A_TICKET_STAFF;
-        U_PUBLIC --> A_PAYMENT_FORM;
-        A_PAYMENT_FORM --> A_CHECKOUT;
+        A1[🔑 Login / Register (JWT)]
+        A2[🧾 Receipts CRUD]
+        A3[📊 Reports & Charts]
+        A4[🎨 Theme Switcher]
+        A5[👥 User Management (Admin)]
+        A6[⚙️ Custom Fields (Admin)]
+        A7[🗂 Settings / Backup & Restore (Admin)]
+        A8[🎫 Support Tickets (Public)]
+        A9[🎟 Staff Tickets]
+        A10[🙏 Pushpanjali Donation (Public)]
+        A11[💳 Razorpay Checkout]
+        A12[📱 QR Code Display]
     end
 
-    ---
-
-    subgraph S_BACKEND["Server-Side API (Node.js/Express)"]
-        B_AUTH[Auth Controller: JWT Roles];
-        B_RECEIPTS[Receipts Controller];
-        B_REPORTS[Reports Controller];
-        B_THEME[Theme Controller];
-        B_USER_MGMT[User Controller];
-        B_CUSTOM_FIELDS[Custom Fields Controller];
-        B_SYS_CONFIG[Settings / Backup Handler];
-        B_TICKETS[Tickets Controller];
-        B_PAYMENT[Payment Controller: Razorpay SDK];
-        B_QR_GEN[QR Code Generator];
-        B_MIDDLEWARE[Role-based Authorization Middleware];
-
-        %% Client to Backend (API) flows
-        A_AUTH --> B_AUTH;
-        A_CRUD --> B_MIDDLEWARE;
-        A_REPORTS --> B_MIDDLEWARE;
-        A_THEME --> B_MIDDLEWARE;
-        A_USER_MGMT --> B_MIDDLEWARE;
-        A_CUSTOM_FIELDS --> B_MIDDLEWARE;
-        A_SYS_CONFIG --> B_MIDDLEWARE;
-        A_TICKET_PUBLIC --> B_MIDDLEWARE;
-        A_TICKET_STAFF --> B_MIDDLEWARE;
-        A_PAYMENT_FORM --> B_MIDDLEWARE;
-
-        B_MIDDLEWARE --> B_RECEIPTS;
-        B_MIDDLEWARE --> B_REPORTS;
-        B_MIDDLEWARE --> B_THEME;
-        B_MIDDLEWARE --> B_USER_MGMT;
-        B_MIDDLEWARE --> B_CUSTOM_FIELDS;
-        B_MIDDLEWARE --> B_SYS_CONFIG;
-        B_MIDDLEWARE --> B_TICKETS;
-        B_MIDDLEWARE --> B_PAYMENT;
+    %% ===============================
+    %% BACKEND (Node.js/Express)
+    %% ===============================
+    subgraph BACKEND["🖥 Backend (Node.js + Express)"]
+        direction TB
+        B1[🔑 Auth Controller (JWT + Roles)]
+        B2[🧾 Receipts Controller]
+        B3[📊 Reports Controller]
+        B4[🎨 Theme Controller]
+        B5[👥 User Controller]
+        B6[⚙️ Custom Fields Controller]
+        B7[🗂 Settings Controller]
+        B8[🎫 Tickets Controller]
+        B9[💳 Payment Controller (Razorpay SDK)]
+        B10[📱 QR Code Generator]
+        B11[🗄 Backup & Restore Handler]
+        B12[🔐 Role-based Middleware]
     end
 
-    ---
-
-    subgraph S_DB["Data Layer (MySQL Database)"]
-        %% Database nodes use the cylinder shape
-        D_USERS[(users)];
-        D_RECEIPTS[(receipts)];
-        D_THEMES[(themes / config)];
-        D_CUSTOM_FIELDS[(custom_fields definition)];
-        D_TICKETS[(support_tickets)];
-        D_CONFIG[(system_config / payments)];
-        D_BACKUP[(backup_files_storage)];
+    %% ===============================
+    %% DATABASE
+    %% ===============================
+    subgraph DB["🗃 MySQL Database"]
+        direction TB
+        D1[(users)]
+        D2[(receipts)]
+        D3[(themes)]
+        D4[(custom_fields)]
+        D5[(tickets)]
+        D6[(payment_config)]
+        D7[(backup_files)]
     end
 
-    ---
-
-    subgraph S_EXTERNAL["External Service"]
-        P_RAZORPAY[Razorpay API Gateway];
+    %% ===============================
+    %% PAYMENT
+    %% ===============================
+    subgraph PAYMENT["💳 Razorpay Gateway"]
+        P1[Razorpay API]
     end
 
-    %% Backend to Data Layer flows
-    B_AUTH --> D_USERS;
-    B_USER_MGMT --> D_USERS;
-    B_RECEIPTS --> D_RECEIPTS;
-    B_RECEIPTS --> B_QR_GEN;
-    B_QR_GEN --> A_QR_DISPLAY;
-    B_REPORTS --> D_RECEIPTS;
-    B_THEME --> D_THEMES;
-    B_CUSTOM_FIELDS --> D_CUSTOM_FIELDS;
-    B_TICKETS --> D_TICKETS;
-    B_PAYMENT --> D_RECEIPTS;
-    B_PAYMENT --> D_CONFIG;
+    %% ===============================
+    %% CLIENT -> BACKEND
+    %% ===============================
+    UA --> A1
+    UB --> A1
+    UC --> A1
+    A1 --> B1 --> D1
 
-    B_SYS_CONFIG -- Backup / Restore --> D_BACKUP;
+    UA --> A2
+    UB --> A2
+    A2 --> B2 --> D2
+    B2 --> B10 --> A12
 
-    %% Payment Integration flow
-    A_CHECKOUT --> P_RAZORPAY;
-    P_RAZORPAY -- Webhook / Success --> B_PAYMENT;
+    UA --> A3
+    UB --> A3
+    A3 --> B3 --> D2
+
+    UA --> A4
+    A4 --> B4 --> D3
+
+    UA --> A5 --> B5 --> D1
+    UA --> A6 --> B6 --> D4
+    UA --> A7 --> B11 --> D7
+
+    UC --> A8 --> B8 --> D5
+    UB --> A9 --> B8
+
+    UC --> A10 --> A11 --> P1
+    A10 --> B9 --> P1
+    B9 --> D2
+
+    %% Role Middleware
+    A1 --> B12
+    A2 --> B12
+    A3 --> B12
+    A4 --> B12
+    A5 --> B12
+    A6 --> B12
+    A7 --> B12
+    A8 --> B12
+    A9 --> B12
+    A10 --> B12
+
 ```
 
 ---
