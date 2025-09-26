@@ -31,7 +31,8 @@ graph TD
         U_STAFF[Staff User]
         U_PUBLIC[Public User]
 
-        A_AUTH{Login / Register (JWT)}
+        %% Changed node shapes to standard brackets for compatibility
+        A_AUTH[Login / Register (JWT)]
         A_CRUD[Receipts: CRUD]
         A_REPORTS[Reporting & Analytics]
         A_THEME[Theme Switcher]
@@ -103,6 +104,7 @@ graph TD
     ---
 
     subgraph S_DB["Data Layer (MySQL Database)"]
+        %% Database nodes use the cylinder shape for visual representation
         D_USERS[(users)]
         D_RECEIPTS[(receipts)]
         D_THEMES[(themes / config)]
