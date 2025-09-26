@@ -27,22 +27,22 @@ flowchart LR
     %% ===============================
     %% CLIENT (Frontend)
     %% ===============================
-    subgraph CLIENT["Frontend (React)"]
+    subgraph CLIENT["Frontend React"]
         direction TB
         UA[User Admin]
         UB[User Staff]
         UC[User Public]
 
-        A1[Login / Register (JWT)]
+        A1[Login / Register - JWT]
         A2[Receipts CRUD]
-        A3[Reports & Charts]
+        A3[Reports and Charts]
         A4[Theme Switcher]
-        A5[User Management (Admin)]
-        A6[Custom Fields (Admin)]
-        A7[Settings / Backup & Restore (Admin)]
-        A8[Support Tickets (Public)]
+        A5[User Management - Admin]
+        A6[Custom Fields - Admin]
+        A7[Settings / Backup & Restore - Admin]
+        A8[Support Tickets - Public]
         A9[Staff Tickets]
-        A10[Pushpanjali Donation (Public)]
+        A10[Pushpanjali Donation - Public]
         A11[Razorpay Checkout]
         A12[QR Code Display]
     end
@@ -50,9 +50,9 @@ flowchart LR
     %% ===============================
     %% BACKEND (Node.js/Express)
     %% ===============================
-    subgraph BACKEND["Backend (Node.js + Express)"]
+    subgraph BACKEND["Backend Node.js Express"]
         direction TB
-        B1[Auth Controller (JWT + Roles)]
+        B1[Auth Controller - JWT Roles]
         B2[Receipts Controller]
         B3[Reports Controller]
         B4[Theme Controller]
@@ -60,9 +60,9 @@ flowchart LR
         B6[Custom Fields Controller]
         B7[Settings Controller]
         B8[Tickets Controller]
-        B9[Payment Controller (Razorpay SDK)]
+        B9[Payment Controller - Razorpay SDK]
         B10[QR Code Generator]
-        B11[Backup & Restore Handler]
+        B11[Backup Restore Handler]
         B12[Role-based Middleware]
     end
 
@@ -71,25 +71,25 @@ flowchart LR
     %% ===============================
     subgraph DB["MySQL Database"]
         direction TB
-        D1[(users)]
-        D2[(receipts)]
-        D3[(themes)]
-        D4[(custom_fields)]
-        D5[(tickets)]
-        D6[(payment_config)]
-        D7[(backup_files)]
+        D1((users))
+        D2((receipts))
+        D3((themes))
+        D4((custom_fields))
+        D5((tickets))
+        D6((payment_config))
+        D7((backup_files))
     end
 
     %% ===============================
     %% PAYMENT
     %% ===============================
-    subgraph PAYMENT["Razorpay Gateway"]
+    subgraph PAYMENT["Razorpay"]
         direction TB
         P1[Razorpay API]
     end
 
     %% ===============================
-    %% CLIENT -> BACKEND
+    %% CONNECTIONS
     %% ===============================
     UA --> A1
     UB --> A1
@@ -119,7 +119,7 @@ flowchart LR
     A10 --> B9 --> P1
     B9 --> D2
 
-    %% Role Middleware
+    %% Role Middleware connections
     A1 --> B12
     A2 --> B12
     A3 --> B12
@@ -130,6 +130,7 @@ flowchart LR
     A8 --> B12
     A9 --> B12
     A10 --> B12
+
 ```
 
 ---
